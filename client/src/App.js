@@ -15,19 +15,20 @@ function App() {
   return (
     <div className='App'>
       <BrowserRouter>
-        <div className='main'>
+        <div className='main header'>
 
           <Navbar />
 
           <div className='usersDisplay flex flex-wrap justify-center gap-2'>
             {listOfUsers.map((user, key) => {
               return (
-                <div key={key} className='bg-rose-100 rounded text-center m-4 p-4 text-md'>
+                <div key={key} className='bg-amber-100 text-center m-4 p-4 text-md drop-shadow-md'>
                   <p>First Name: {user.firstName} </p>
                   <p>Last Name: {user.lastName} </p>
-                  <p>Mobile No: {user.mobileNo} </p>
-                  <p>Email: {user.email} </p>
+                  <p>Username: {user.username} </p>
                   <p>Password: {user.password} </p>
+                  <p>Email: {user.email} </p>
+                  <p>Mobile No: {user.mobileNo} </p>
                 </div>
               )
             })}
@@ -38,7 +39,7 @@ function App() {
             <Route path='/register' element={<Register />} />
           </Routes>
             
-          </div>
+        </div>
       </BrowserRouter> 
     </div>
   );

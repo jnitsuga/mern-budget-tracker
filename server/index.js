@@ -1,10 +1,12 @@
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
+const cors = require('cors')
+require('dotenv').config();
+
 const UserModel = require('./models/Users')
 
-const cors = require('cors')
-
+//Middlewares
 app.use(express.json())
 app.use(cors())
 
@@ -29,6 +31,8 @@ app.get('/getUsers', (req, res) => {
     }
   })
 })
+
+const port = process.env.PORT || 4000;
 
 app.listen(4000, () => {
   console.log(`Serving is running on port 4000...`)

@@ -8,9 +8,10 @@ export const ContextProvider = ({children}) => {
 
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
-  const [mobileNo, setMobileNo] = useState('')
-  const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('')
+  const [mobileNo, setMobileNo] = useState('')
 
   useEffect(() => {
     Axios.get('http://localhost:4000/getUsers').then((response) => {
@@ -27,12 +28,14 @@ export const ContextProvider = ({children}) => {
         setFirstName,
         lastName,
         setLastName,
-        mobileNo,
-        setMobileNo,
-        email,
-        setEmail,
+        username,
+        setUsername,
         password,
         setPassword,
+        email,
+        setEmail,
+        mobileNo,
+        setMobileNo,
       }}
     >
       {children}
