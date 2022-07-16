@@ -1,39 +1,45 @@
-import { useState, useEffect } from 'react'
-import Axios from 'axios'
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Navbar from './components/Navbar';
-
+import Login from './pages/Login';
+import Register from './pages/Register';
 import './App.css';
 
+import { useUserContext } from './contexts/ContextProvider';
+
+
 function App() {
-  const [listOfUsers, setListOfUsers] = useState([]);
-
-  useEffect(() => {
-    Axios.get('http://localhost:4000/getUsers').then((response) => {
-      setListOfUsers(response.data)
-    })
-
-  }, [])
-  
+  const { listOfUsers } = useUserContext();
 
   return (
-    <div className="App">
-      <Navbar />
-      
-      <div className="usersDisplay">
-        {listOfUsers.map((user) => {
-          return (
-            <div>
-              <h2>First Name: {user.firstName} </h2>
-              <h2>Last Name: {user.lastName} </h2>
-              <h2>Mobile No: {user.mobileNo} </h2>
-              <h2>Email: {user.email} </h2>
-              <h2>Password: {user.password} </h2>
-            </div>
-          )
-        })}
+    <div className='App'>
+      <BrowserRouter>
+        <div className='main'>
 
-      </div>
+          <Navbar />
+
+          <div className='usersDisplay flex flex-wrap justify-center gap-2'>
+            {listOfUsers.map((user, key) => {
+              return (
+                <div key={key} className='bg-rose-100 rounded text-center m-4 p-4 text-md'>
+                  <p>First Name: {user.firstName} </p>
+                  <p>Last Name: {user.lastName} </p>
+                  <p>Mobile No: {user.mobileNo} </p>
+                  <p>Email: {user.email} </p>
+                  <p>Password: {user.password} </p>
+                </div>
+              )
+            })}
+          </div>
+
+          <Routes>
+            <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Register />} />
+          </Routes>
+            
+          </div>
+      </BrowserRouter> 
     </div>
   );
 }
