@@ -14,10 +14,10 @@ export const ContextProvider = ({children}) => {
   const [mobileNo, setMobileNo] = useState('')
 
   useEffect(() => {
-    Axios.get('http://localhost:4000/getUsers').then((response) => {
+    Axios.get('http://localhost:4000/api/users/getUsers').then((response) => {
       setListOfUsers(response.data)
     })
-  }, [])
+  }, [listOfUsers])
   
   return (
     <UserContext.Provider

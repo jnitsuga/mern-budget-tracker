@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
+const bcrypt = require('bcrypt')
 
-const UserSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
 	firstName: {
 		type: String,
 		required: [true, 'firstName is required']
@@ -41,7 +42,22 @@ const UserSchema = new mongoose.Schema({
         default: new Date()
       }  
     }
-	]
+	],
+},
+{
+	timestamps: true
+});
+
+userSchema.pre('save', async function() {
+	//logic for bcrypt
+	//needs a salt
+	const salt = await bcrypt.genSalt(10)
+	this.password = await bcrypt.hash(this.password, salt)
 })
 
-module.exports = mongoose.model('users', UserSchema)
+//verify password
+userSchema.methods.isPasswordValid = async function(enteredPassword) {
+	return await bcrypt.compare(enteredPassword, this.password);
+}
+
+module.exports = mongoose.model('User', userSchema)

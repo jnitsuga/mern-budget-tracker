@@ -21,7 +21,7 @@ const Register = () => {
   const { inputFirstName, inputLastName, inputUsername, inputPassword, inputPassword2, inputEmail, inputMobileNo } = formData;
   
   const createUser = () => {
-    Axios.post('http://localhost:4000/createUser', {
+    Axios.post('http://localhost:4000/api/users/registerUser', {
       firstName,
       lastName,
       username,
@@ -158,7 +158,7 @@ const Register = () => {
 
       <input type='text' placeholder='Last Name' className='border-2 rounded block focus:outline-blue-400' onChange={(e) => {setLastName(e.target.value)}} />
 
-      <input type='text' placeholder='Last Name' className='border-2 rounded block focus:outline-blue-400' onChange={(e) => {setUsername(e.target.value)}} />
+      <input type='text' placeholder='Username' className='border-2 rounded block focus:outline-blue-400' onChange={(e) => {setUsername(e.target.value)}} />
 
       <input type='text' placeholder='Password' className='border-2 rounded block focus:outline-blue-400' onChange={(e) => {setPassword(e.target.value)}} />
 
