@@ -10,6 +10,7 @@ export const ContextProvider = ({children}) => {
   const [lastName, setLastName] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
   const [email, setEmail] = useState('')
   const [mobileNo, setMobileNo] = useState('')
 
@@ -32,6 +33,8 @@ export const ContextProvider = ({children}) => {
         setUsername,
         password,
         setPassword,
+        confirmPassword,
+        setConfirmPassword,
         email,
         setEmail,
         mobileNo,

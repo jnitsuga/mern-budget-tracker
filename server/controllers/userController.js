@@ -19,26 +19,35 @@ const getUsers = async (req, res) => {
 // @route   POST /api/users/registerUser
 // @access  Public
 const registerUser = async (req, res) => {
+  console.log(req.body.username)
   const userExists = await UserModel.findOne({ username: req.body.username })
   if(userExists) {
+    console.log('user exists')
     res.json({
-      message: 'Username already exists'
+      message: 'Username already exists!'
     })
-  }
-
-  try {
-    const newUser = new UserModel({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      username: req.body.username,
-      password: bcrypt.hashSync(req.body.password, 10),
-      email: req.body.email,
-      mobileNo: req.body.mobileNo
-    })
+  } else {
+    try {
+      const newUser = new UserModel({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        username: req.body.username,
+        password: bcrypt.hashSync(req.body.password, 10),
+        email: req.body.email,
+        mobileNo: req.body.mobileNo
+      })
       await newUser.save()
-  } catch(error) {
-    res.json(error)
+      res.json(newUser)
+    } catch(error) {
+      res.json(error)
+    }
   }
+}
+
+const userExists = (params) => {
+  return UserModel.findOne({ username: params.username }).then(result => {
+    return 
+  })
 }
 
 // @desc    Login user

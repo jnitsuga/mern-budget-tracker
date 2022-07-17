@@ -7,7 +7,7 @@ import { FaUser } from 'react-icons/fa'
 import { useUserContext } from '../contexts/ContextProvider'
 
 const Register = () => {
-  const { listOfUsers, setListOfUsers, firstName, setFirstName, lastName, setLastName, username, setUsername, password, setPassword, email, setEmail, mobileNo, setMobileNo } = useUserContext();
+  const { listOfUsers, setListOfUsers, firstName, setFirstName, lastName, setLastName, username, setUsername, password, setPassword, confirmPassword, setConfirmPassword, email, setEmail, mobileNo, setMobileNo } = useUserContext();
   
   const [formData, setFormData] = useState({
     inputFirstName: '',
@@ -21,10 +21,14 @@ const Register = () => {
 
   const { inputFirstName, inputLastName, inputUsername, inputPassword, inputPassword2, inputEmail, inputMobileNo } = formData;
   
+  // register user method 1
   const createUser = (e) => {
     e.preventDefault();
 
-    Axios.post('http://localhost:4000/api/users/registerUser', {
+    if(password !== confirmPassword) {
+      toast('Passwords do not match!')
+    } else {
+      Axios.post('http://localhost:4000/api/users/registerUser', {
       firstName,
       lastName,
       username,
@@ -32,7 +36,6 @@ const Register = () => {
       mobileNo,
       email,
     }).then((response) => {
-      alert(`${firstName} ${lastName} succesfully created!`)
       setListOfUsers([...listOfUsers, {
         firstName,
         lastName,
@@ -41,9 +44,12 @@ const Register = () => {
         mobileNo,
         email,
       }])
+      toast(`User ${inputFirstName} successfully registered!`)
     })
+    }
   };
 
+  // register user method 2
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -97,6 +103,7 @@ const Register = () => {
               placeholder='First Name' 
               value={inputFirstName} 
               onChange={onChange}
+              required
             />
           </div>
           <div className="form-group">
@@ -108,6 +115,7 @@ const Register = () => {
               placeholder='Last Name' 
               value={inputLastName} 
               onChange={onChange}
+              required
             />
           </div>
           <div className="form-group">
@@ -119,6 +127,7 @@ const Register = () => {
               placeholder='Username' 
               value={inputUsername} 
               onChange={onChange}
+              required
             />
           </div>
           <div className="form-group">
@@ -130,6 +139,7 @@ const Register = () => {
               placeholder='Password' 
               value={inputPassword} 
               onChange={onChange}
+              required
             />
           </div>
           <div className="form-group">
@@ -141,6 +151,7 @@ const Register = () => {
               placeholder='Confirm Password' 
               value={inputPassword2} 
               onChange={onChange}
+              required
             />
           </div>
           <div className="form-group">
@@ -149,7 +160,7 @@ const Register = () => {
               className="form-control" 
               id='inputEmail' 
               name='inputEmail'
-              placeholder='Email' 
+              placeholder='Email (optional)' 
               value={inputEmail} 
               onChange={onChange}
             />
@@ -160,7 +171,7 @@ const Register = () => {
               className="form-control" 
               id='inputMobileNo' 
               name='inputMobileNo'
-              placeholder='Mobile No.' 
+              placeholder='Mobile No. (optional)' 
               value={inputMobileNo} 
               onChange={onChange}
             />
@@ -184,17 +195,19 @@ const Register = () => {
         <span className='ml-1'>Register</span>
       </p>
 
-      <input type='text' placeholder='First Name' className='border-2 rounded block focus:outline-blue-400' onChange={(e) => {setFirstName(e.target.value)}} />
+      <input type='text' placeholder='First Name' className='border-2 rounded block focus:outline-blue-400' onChange={(e) => {setFirstName(e.target.value)}} required />
 
-      <input type='text' placeholder='Last Name' className='border-2 rounded block focus:outline-blue-400' onChange={(e) => {setLastName(e.target.value)}} />
+      <input type='text' placeholder='Last Name' className='border-2 rounded block focus:outline-blue-400' onChange={(e) => {setLastName(e.target.value)}} required />
 
-      <input type='text' placeholder='Username' className='border-2 rounded block focus:outline-blue-400' onChange={(e) => {setUsername(e.target.value)}} />
+      <input type='text' placeholder='Username' className='border-2 rounded block focus:outline-blue-400' onChange={(e) => {setUsername(e.target.value)}} required />
 
-      <input type='text' placeholder='Password' className='border-2 rounded block focus:outline-blue-400' onChange={(e) => {setPassword(e.target.value)}} />
-
-      <input type='text' placeholder='Email' className='border-2 rounded block focus:outline-blue-400' onChange={(e) => {setEmail(e.target.value)}} />
+      <input type='password' placeholder='Password' className='border-2 rounded block focus:outline-blue-400' onChange={(e) => {setPassword(e.target.value)}} required />
       
-      <input type='text' placeholder='Mobile No.' className='border-2 rounded block focus:outline-blue-400' onChange={(e) => {setMobileNo(e.target.value)}} />
+      <input type='password' placeholder='Confirm Password' className='border-2 rounded block focus:outline-blue-400' onChange={(e) => {setConfirmPassword(e.target.value)}} required />
+
+      <input type='text' placeholder='Email (optional)' className='border-2 rounded block focus:outline-blue-400' onChange={(e) => {setEmail(e.target.value)}} />
+      
+      <input type='text' placeholder='Mobile No. (optional)' className='border-2 rounded block focus:outline-blue-400' onChange={(e) => {setMobileNo(e.target.value)}} />
 
       <button 
         onClick={createUser}
