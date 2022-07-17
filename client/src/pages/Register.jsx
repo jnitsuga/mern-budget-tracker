@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Axios from 'axios'
+import { toast } from 'react-toastify';
 
 import { FaUser } from 'react-icons/fa'
 
@@ -20,7 +21,9 @@ const Register = () => {
 
   const { inputFirstName, inputLastName, inputUsername, inputPassword, inputPassword2, inputEmail, inputMobileNo } = formData;
   
-  const createUser = () => {
+  const createUser = (e) => {
+    e.preventDefault();
+
     Axios.post('http://localhost:4000/api/users/registerUser', {
       firstName,
       lastName,
@@ -50,6 +53,29 @@ const Register = () => {
 
   const onSubmit = (e) => {
     e.preventDefault()
+
+    if(inputPassword !== inputPassword2) {
+      toast('Passwords do not match!')
+    } else {
+      Axios.post('http://localhost:4000/api/users/registerUser', {
+        firstName: inputFirstName,
+        lastName: inputLastName,
+        username: inputUsername,
+        password: inputPassword,
+        email: inputEmail,
+        mobileNo: inputMobileNo,
+      }).then((response) => {
+        setListOfUsers([...listOfUsers, {
+          firstName: inputFirstName,
+          lastName: inputLastName,
+          username: inputUsername,
+          password: inputPassword,
+          email: inputEmail,
+          mobileNo: inputMobileNo,
+        }])
+        toast(`User ${inputFirstName} successfully registered!`)
+      })
+    }
   }
 
   return (
@@ -140,7 +166,11 @@ const Register = () => {
             />
           </div>
           <div className="form-group">
-            <button type="submit" className='btn btn-block bg-slate-400'>Submit</button>
+            <button 
+              type="submit" 
+              className='btn btn-block bg-slate-400' 
+              onClick={onSubmit}
+            >Submit</button>
           </div>
         </form>
       </section>

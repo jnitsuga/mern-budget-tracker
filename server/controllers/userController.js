@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
 const UserModel = require('../models/User')
+const bcrypt = require('bcrypt')
 
 // @desc    Get users
 // @route   GET /api/users/getUsers
@@ -26,8 +27,15 @@ const registerUser = async (req, res) => {
   }
 
   try {
-    const user = await UserModel.create(req.body)
-    res.json(user)
+    const newUser = new UserModel({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      username: req.body.username,
+      password: bcrypt.hashSync(req.body.password, 10),
+      email: req.body.email,
+      mobileNo: req.body.mobileNo
+    })
+      await newUser.save()
   } catch(error) {
     res.json(error)
   }

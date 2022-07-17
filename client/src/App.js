@@ -1,10 +1,13 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+
+import './App.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import './App.css';
 
 import { useUserContext } from './contexts/ContextProvider';
 
@@ -17,6 +20,7 @@ function App() {
       <BrowserRouter>
         <div className='main header'>
 
+          <ToastContainer />
           <Navbar />
 
           <div className='usersDisplay flex flex-wrap justify-center gap-2'>
@@ -26,9 +30,9 @@ function App() {
                   <p>First Name: {user.firstName} </p>
                   <p>Last Name: {user.lastName} </p>
                   <p>Username: {user.username} </p>
-                  <p>Password: {user.password} </p>
-                  <p>Email: {user.email} </p>
-                  <p>Mobile No: {user.mobileNo} </p>
+                  {/* <p>Password: {user.password} </p> */}
+                  {user.email !== '' ? <p>Email: {user.email} </p> : null }
+                  {user.mobileNo !== '' ? <p>Mobile No: {user.mobileNo} </p> : null }
                 </div>
               )
             })}
