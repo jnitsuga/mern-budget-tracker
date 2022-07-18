@@ -4,7 +4,14 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+      'jc-lilypad-01': "url('../public/jc-lilypad-01.png')",
+      'jc-lilypad-02': "url('../public/jc-lilypad-02.png')",
+      'jc-ridethewave-01': "url('../public/jc-ridethewave-01.png')",
+      'jc-ridethewave-02': "url('../public/jc-ridethewave-02.png')",
+      },
+    },
     screens: {
       'xs': '390px',
       // => @media (min-width: 390px) { ... }

@@ -14,6 +14,8 @@ export const ContextProvider = ({children}) => {
   const [inputEmail, setInputEmail] = useState('')
   const [inputMobileNo, setInputMobileNo] = useState('')
 
+  const [loggedIn, setLoggedIn] = useState('')
+
   useEffect(() => {
     Axios.get('http://localhost:4000/api/users/getUsers').then((response) => {
       setListOfUsers(response.data)
@@ -39,6 +41,8 @@ export const ContextProvider = ({children}) => {
         setInputEmail,
         inputMobileNo,
         setInputMobileNo,
+        loggedIn,
+        setLoggedIn,
       }}
     >
       {children}

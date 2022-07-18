@@ -3,6 +3,7 @@ import Axios from 'axios'
 import { toast } from 'react-toastify';
 import { FaUser } from 'react-icons/fa'
 import { useUserContext } from '../contexts/ContextProvider'
+import Banner from '../components/Banner';
 
 const Register = () => {
   const { 
@@ -21,7 +22,8 @@ const Register = () => {
     inputEmail,
     setInputEmail,
     inputMobileNo,
-    setInputMobileNo, 
+    setInputMobileNo,
+    loggedIn, 
   } = useUserContext();
   
   const registerUser = (e) => {
@@ -63,73 +65,80 @@ const Register = () => {
   }
 
   return (
+    <>
+    <Banner header='/register' subHeader='Register' />
     <div className='m-4 space-y-1.5'>
-      <p className='flex items-center font-bold'>
-        <span><FaUser /></span>
-        <span className='ml-1'>Register</span>
-      </p>
 
-      <input 
-        type='text' 
-        placeholder='First Name' 
-        className='border-2 rounded block focus:outline-blue-400' 
-        onChange={(e) => {setInputFirstName(e.target.value)}} 
-        required 
-      />
-
-      <input 
-        type='text' 
-        placeholder='Last Name' 
-        className='border-2 rounded block focus:outline-blue-400' 
-        onChange={(e) => {setInputLastName(e.target.value)}} 
-        required />
-
-      <input 
-        type='text' 
-        placeholder='Username' 
-        className='border-2 rounded block focus:outline-blue-400' 
-        onChange={(e) => {setInputUsername(e.target.value)}} 
-        required 
-      />
-
-      <input 
-        type='password' 
-        placeholder='Password' 
-        className='border-2 rounded block focus:outline-blue-400' 
-        onChange={(e) => {setInputPassword(e.target.value)}} 
-        required 
-      />
-      
-      <input 
-        type='password' 
-        placeholder='Confirm Password' 
-        className='border-2 rounded block focus:outline-blue-400' 
-        onChange={(e) => {setInputPassword2(e.target.value)}} 
-        required 
-      />
-
-      <input 
-        type='text' 
-        placeholder='Email (optional)' 
-        className='border-2 rounded block focus:outline-blue-400' 
-        onChange={(e) => {setInputEmail(e.target.value)}} 
-      />
-      
-      <input 
-        type='text' 
-        placeholder='Mobile No. (optional)' 
-        className='border-2 rounded block focus:outline-blue-400' 
-        onChange={(e) => {setInputMobileNo(e.target.value)}} 
-      />
-
-      <button 
-        onClick={registerUser}
-        className = 'bg-gray-200 p-1 rounded drop-shadow-md hover:bg-blue-300'
-      > 
-        Create User 
-      </button>
-
+      {loggedIn ? null : 
+        <>
+        <p className='flex items-center font-bold'>
+          <span><FaUser /></span>
+          <span className='ml-1'>Register</span>
+        </p>
+  
+        <input 
+          type='text' 
+          placeholder='First Name' 
+          className='border-2 rounded block focus:outline-blue-400' 
+          onChange={(e) => {setInputFirstName(e.target.value)}} 
+          required 
+        />
+  
+        <input 
+          type='text' 
+          placeholder='Last Name' 
+          className='border-2 rounded block focus:outline-blue-400' 
+          onChange={(e) => {setInputLastName(e.target.value)}} 
+          required />
+  
+        <input 
+          type='text' 
+          placeholder='Username' 
+          className='border-2 rounded block focus:outline-blue-400' 
+          onChange={(e) => {setInputUsername(e.target.value)}} 
+          required 
+        />
+  
+        <input 
+          type='password' 
+          placeholder='Password' 
+          className='border-2 rounded block focus:outline-blue-400' 
+          onChange={(e) => {setInputPassword(e.target.value)}} 
+          required 
+        />
+        
+        <input 
+          type='password' 
+          placeholder='Confirm Password' 
+          className='border-2 rounded block focus:outline-blue-400' 
+          onChange={(e) => {setInputPassword2(e.target.value)}} 
+          required 
+        />
+  
+        <input 
+          type='text' 
+          placeholder='Email (optional)' 
+          className='border-2 rounded block focus:outline-blue-400' 
+          onChange={(e) => {setInputEmail(e.target.value)}} 
+        />
+        
+        <input 
+          type='text' 
+          placeholder='Mobile No. (optional)' 
+          className='border-2 rounded block focus:outline-blue-400' 
+          onChange={(e) => {setInputMobileNo(e.target.value)}} 
+        />
+  
+        <button 
+          onClick={registerUser}
+          className = 'bg-gray-200 p-1 rounded drop-shadow-md hover:bg-blue-300'
+        > 
+          Create User 
+        </button>
+        </>
+      }
     </div>
+    </>
   )
 }
 

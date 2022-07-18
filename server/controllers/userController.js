@@ -42,8 +42,8 @@ const registerUser = async (req, res) => {
   }
 }
 
-const usernameExists = (req, res) => {
-  return UserModel.find({ username: req.body.username })
+const usernameExists = async (req, res) => {
+  await UserModel.find({ username: req.body.username })
   .then(result => {
     return result.length > 0 ? true : false
   })
@@ -73,7 +73,7 @@ const loginUser = async (req, res) => {
     const accessToken = auth.createAccessToken(user)
     return (
       { accessToken: accessToken }, 
-      res.json(`User ${user.username} successfully logged in`)
+      res.json(user)
     )
   })
 }

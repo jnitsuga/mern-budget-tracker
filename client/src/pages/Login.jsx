@@ -1,76 +1,62 @@
-import React, { useState } from 'react'
-// import Axios from 'axios'
-
+import React from 'react'
+import Axios from 'axios'
+import { toast } from 'react-toastify';
 import { FaSignInAlt } from 'react-icons/fa'
+import { useUserContext } from '../contexts/ContextProvider'
+import Banner from '../components/Banner';
 
 const Login = () => {
-
-  const [formData, setFormData] = useState({
-    inputUsername: '',
-    inputPassword: '',
-  })
-
-  const {inputUsername, inputPassword } = formData;
-  
-
-  const onChange = (e) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }))
-  }
+  const { inputUsername, setInputUsername, inputPassword, setInputPassword, loggedIn, setLoggedIn } = useUserContext();
 
   const login = async (e) => {
     e.preventDefault()
 
+    Axios.post('http://localhost:4000/api/users/login', {
+      username: inputUsername,
+      password: inputPassword
+    }).then(response => {
+      toast(`Welcome, ${response.data.firstName}!`)
+      setLoggedIn(`${response.data.firstName}`)
+    })
   }
 
   return (
+    <>
+    <Banner header='/login' subHeader='Log In' />
     <div className='m-4 space-y-1.5'>
-      <section className="form">
+      {loggedIn ? null : 
+      <>
+        <p className='flex items-center font-bold'>
+          <span><FaSignInAlt /></span>
+          <span className='ml-1'>Log In</span>
+        </p>
 
-        <form onSubmit={login}>
-          <p className='flex items-center justify-center font-bold m-2'>
-            <span><FaSignInAlt /></span>
-            <span className='ml-1'>Log In</span>
-          </p>
-       
-          <div className="form-group">
-            <input 
-              type="text" 
-              className="form-control" 
-              id='inputUsername' 
-              name='inputUsername'
-              placeholder='Username' 
-              value={inputUsername} 
-              onChange={onChange}
-            />
-          </div>
-          <div className="form-group">
-            <input 
-              type="password" 
-              className="form-control" 
-              id='inputPassword' 
-              name='inputPassword'
-              placeholder='Password' 
-              value={inputPassword} 
-              onChange={onChange}
-            />
-          </div>
+        <input 
+          type='text' 
+          placeholder='Username' 
+          className='border-2 rounded block focus:outline-blue-400' 
+          onChange={(e) => {setInputUsername(e.target.value)}} 
+          required 
+        />
 
+        <input 
+          type='password' 
+          placeholder='Password' 
+          className='border-2 rounded block focus:outline-blue-400' 
+          onChange={(e) => {setInputPassword(e.target.value)}} 
+          required 
+        />
 
-          <div className="form-group">
-            <button 
-              type="submit" 
-              className='btn btn-block bg-slate-400'
-            >
-              Submit
-            </button>
-          </div>
-        </form>
-
-      </section>
+        <button 
+          onClick={login}
+          className = 'bg-gray-200 p-1 rounded drop-shadow-md hover:bg-blue-300'
+        > 
+          Log In
+        </button>
+      </>
+      }
     </div>
+    </>
   )
 }
 
