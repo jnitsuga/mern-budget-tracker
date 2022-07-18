@@ -6,13 +6,13 @@ const UserContext = createContext();
 export const ContextProvider = ({children}) => {
   const [listOfUsers, setListOfUsers] = useState([]);
 
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [email, setEmail] = useState('')
-  const [mobileNo, setMobileNo] = useState('')
+  const [inputFirstName, setInputFirstName] = useState('')
+  const [inputLastName, setInputLastName] = useState('')
+  const [inputUsername, setInputUsername] = useState('')
+  const [inputPassword, setInputPassword] = useState('')
+  const [inputPassword2, setInputPassword2] = useState('')
+  const [inputEmail, setInputEmail] = useState('')
+  const [inputMobileNo, setInputMobileNo] = useState('')
 
   useEffect(() => {
     Axios.get('http://localhost:4000/api/users/getUsers').then((response) => {
@@ -25,20 +25,20 @@ export const ContextProvider = ({children}) => {
       value={{
         listOfUsers,
         setListOfUsers,
-        firstName,
-        setFirstName,
-        lastName,
-        setLastName,
-        username,
-        setUsername,
-        password,
-        setPassword,
-        confirmPassword,
-        setConfirmPassword,
-        email,
-        setEmail,
-        mobileNo,
-        setMobileNo,
+        inputFirstName,
+        setInputFirstName,
+        inputLastName,
+        setInputLastName,
+        inputUsername,
+        setInputUsername,
+        inputPassword,
+        setInputPassword,
+        inputPassword2,
+        setInputPassword2,
+        inputEmail,
+        setInputEmail,
+        inputMobileNo,
+        setInputMobileNo,
       }}
     >
       {children}

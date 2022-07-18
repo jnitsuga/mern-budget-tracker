@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
+// import Axios from 'axios'
 
 import { FaSignInAlt } from 'react-icons/fa'
 
-
 const Login = () => {
+
   const [formData, setFormData] = useState({
     inputUsername: '',
     inputPassword: '',
@@ -19,15 +20,16 @@ const Login = () => {
     }))
   }
 
-  const onSubmit = (e) => {
+  const login = async (e) => {
     e.preventDefault()
+
   }
 
   return (
     <div className='m-4 space-y-1.5'>
       <section className="form">
 
-        <form onSubmit={onSubmit}>
+        <form onSubmit={login}>
           <p className='flex items-center justify-center font-bold m-2'>
             <span><FaSignInAlt /></span>
             <span className='ml-1'>Log In</span>
@@ -58,7 +60,12 @@ const Login = () => {
 
 
           <div className="form-group">
-            <button type="submit" className='btn btn-block bg-slate-400'>Submit</button>
+            <button 
+              type="submit" 
+              className='btn btn-block bg-slate-400'
+            >
+              Submit
+            </button>
           </div>
         </form>
 

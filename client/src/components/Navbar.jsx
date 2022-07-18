@@ -7,7 +7,7 @@ const Navbar = () => {
     <div className='flex relative items-center justify-between p-4 bg-slate-200 drop-shadow-sm'>
       <div className='title'>
         <Link to='/'>
-          <span className='m-2 text-xl font-bold'>Vaccine Tracker</span>
+          <span className='m-2 text-xl font-bold'>VaccTrack</span>
         </Link>
       </div>
 

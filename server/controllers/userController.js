@@ -1,6 +1,7 @@
-const jwt = require('jsonwebtoken')
 const UserModel = require('../models/User')
 const bcrypt = require('bcrypt')
+const auth = require('../auth')
+const User = require('../models/User')
 
 // @desc    Get users
 // @route   GET /api/users/getUsers
@@ -19,34 +20,35 @@ const getUsers = async (req, res) => {
 // @route   POST /api/users/registerUser
 // @access  Public
 const registerUser = async (req, res) => {
-  console.log(req.body.username)
+  const newUser = new UserModel({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    username: req.body.username,
+    password: bcrypt.hashSync(req.body.password, 10),
+    email: req.body.email,
+    mobileNo: req.body.mobileNo
+  })
+
   const userExists = await UserModel.findOne({ username: req.body.username })
-  if(userExists) {
-    console.log('user exists')
-    res.json({
-      message: 'Username already exists!'
-    })
+
+  if (!newUser.firstName || !newUser.lastName || !newUser.username) {
+    return res.status(400).json({'message': 'Missing required inputs'})
+  } else if (userExists) { 
+    return res.status(400).json({'message': 'That username is already taken'})
   } else {
-    try {
-      const newUser = new UserModel({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        username: req.body.username,
-        password: bcrypt.hashSync(req.body.password, 10),
-        email: req.body.email,
-        mobileNo: req.body.mobileNo
-      })
-      await newUser.save()
-      res.json(newUser)
-    } catch(error) {
-      res.json(error)
-    }
+    await newUser.save()
+    .then(user => res.status(201).json(`User ${user.username} successfully registered!`))
+    .catch(err => res.status(400).json('Error:' + err))
   }
 }
 
-const userExists = (params) => {
-  return UserModel.findOne({ username: params.username }).then(result => {
-    return 
+const usernameExists = (req, res) => {
+  return UserModel.find({ username: req.body.username })
+  .then(result => {
+    return result.length > 0 ? true : false
+  })
+  .then(result => {
+    res.send(result)
   })
 }
 
@@ -54,16 +56,26 @@ const userExists = (params) => {
 // @route   POST /api/users/login
 // @access  Public
 const loginUser = async (req, res) => {
-  const userFound = await UserModel.findOne({ username: req.body.username })
-  if (userFound && (await userFound.isPasswordValid(req.body.password))) {
-    res.json({
-      message: 'You have successfully logged in'
-    })
-  } else {
-    res.json({
-      message: 'Wrong login credentials'
-    })
-  }
+  await UserModel.findOne({ username: req.body.username }).then(user => {
+    if(!user) {
+      return (
+          false,
+          res.json(`Error: couldn't find user with username of ${req.body.username}`)
+      )
+    }
+
+    const isPasswordMatched = bcrypt.compareSync(req.body.password, user.password)
+    if(!isPasswordMatched) {
+      return false,
+      res.json('Invalid username/password')
+    }
+
+    const accessToken = auth.createAccessToken(user)
+    return (
+      { accessToken: accessToken }, 
+      res.json(`User ${user.username} successfully logged in`)
+    )
+  })
 }
 
 // @desc    Get user data
@@ -76,6 +88,7 @@ const getMe = async (req, res) => {
 module.exports = {
   getUsers, 
   registerUser,
+  usernameExists,
   loginUser,
   getMe,
 }
