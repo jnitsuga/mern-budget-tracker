@@ -16,13 +16,14 @@ function App() {
   return (
     <div className='App'>
       <BrowserRouter>
-        <div className='main header flex-nowrap justify-center'>
+        <div className='main header'>
 
           <ToastContainer />
           <Navbar />
 
           <Routes>
             <Route path='/' element={<Home />} />
+            <Route path='/home' element={<Home />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='/admin' element={<Admin />} />

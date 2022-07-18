@@ -8,7 +8,7 @@ const Navbar = () => {
   const { loggedIn } = useUserContext()
 
   return (
-    <div className='flex w-full items-center justify-between p-4 bg-slate-200 drop-shadow-sm'>
+    <div className='flex w-full items-center justify-between p-4 bg-slate-200 drop-shadow-sm h-12'>
       <div className='title'>
         <Link to='/'>
           <span className='m-2 text-xl font-bold'>VaccTrack</span>

@@ -1,9 +1,13 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+import { useUserContext } from '../contexts/ContextProvider'
 
 const Banner = (props) => {
+  const { loggedIn } = useUserContext()
+
   return (
     <div className='m-4'>
-      <div className={`${props.bannerTw} h-44 bg-gray rounded-xl w-full p-8 pt-9 bg-jc-lilypad-01 bg-no-repeat bg-cover bg-center`}>
+      <div className={`${props.bannerTw} bg-gray rounded-xl w-full p-8 pt-9 bg-jc-lilypad-01 bg-no-repeat bg-cover bg-center`}>
         <div className='flex justify-between items-center'>
           <div>
             <p className={`${props.headerTw} font-bold text-gray-700`}>{props.header}</p>
@@ -20,6 +24,35 @@ const Banner = (props) => {
           </button>  */}
         </div>
       </div>
+
+      <div className='flex w-full items-center p-4 bg-slate-200 drop-shadow-sm rounded-xl mt-3 h-14'>
+        <div className='nav-links flex'>
+          <Link to='/' style={{ display: 'flex' }} className='m-2 text-sm cursor-pointer items-center'>
+            <span></span>
+            <span className='ml-1 hover:text-lg'>Home</span>
+          </Link>
+
+          {loggedIn ?
+            <>
+            <Link to='/' style={{ display: 'flex' }} className='m-2 text-sm cursor-pointer items-center'>
+              <span></span>
+              <span className='ml-1 hover:text-lg'>My List</span>
+            </Link> 
+
+            <Link to='/' style={{ display: 'flex' }} className='m-2 text-sm cursor-pointer items-center'>
+              <span></span>
+              <span className='ml-1 hover:text-lg'>Log Out</span>
+            </Link> 
+            </>
+          : 
+            <>
+            </>
+          }
+
+        </div>
+      
+      </div>
+
     </div>
   )
 }
