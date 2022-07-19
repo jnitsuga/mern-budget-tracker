@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
@@ -10,6 +13,9 @@ module.exports = {
       'jc-lilypad-02': "url('../public/jc-lilypad-02.png')",
       'jc-ridethewave-01': "url('../public/jc-ridethewave-01.png')",
       'jc-ridethewave-02': "url('../public/jc-ridethewave-02.png')",
+      },
+      fontFamily: {
+        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       },
     },
     screens: {

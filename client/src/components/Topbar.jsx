@@ -1,4 +1,5 @@
 import React from 'react'
+import Dropdown from '../components/Dropdown'
 import { FaSignInAlt, FaUser } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
@@ -17,10 +18,13 @@ const Navbar = () => {
 
       <div className='nav-links flex'>
         {userLoggedIn ? 
-          <Link to='/me' style={{ display: 'flex' }} className='m-2 text-sm cursor-pointer items-center'>
+          <>
+          <Dropdown />
+          {/* <Link to='/me' style={{ display: 'flex' }} className='m-2 text-sm cursor-pointer items-center'>
             <span><FaUser /></span>
             <span className='ml-1'>Account</span>
-          </Link>
+          </Link> */}
+          </>
           : 
           <>
             <Link to='/login' style={{ display: 'flex' }} className='m-2 text-sm cursor-pointer items-center'>

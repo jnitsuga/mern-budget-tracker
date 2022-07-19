@@ -33,7 +33,7 @@ const Login = () => {
           localStorage.setItem('token', res.data.accessToken)
           retrieveUserDetails(res.data.accessToken)
           toast('Successfully logged in')
-          window.location='/'
+          
         } 
       })
     } catch (error) {

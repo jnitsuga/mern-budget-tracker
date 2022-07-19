@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useUserContext } from '../contexts/ContextProvider'
 
 const Banner = (props) => {
-  const { userLoggedIn, logoutUser } = useUserContext();
+  const { userLoggedIn } = useUserContext();
 
   return (
     <div className='m-4'>
@@ -27,19 +27,19 @@ const Banner = (props) => {
 
       <div className='flex w-full items-center p-4 bg-slate-200 drop-shadow-sm rounded-xl mt-3 h-14'>
         <div className='nav-links flex'>
-          <Link to='/' style={{ display: 'flex' }} className='m-2 text-sm cursor-pointer items-center'>
+          <Link to='/' style={{ display: 'flex' }} className='m-2 text-md cursor-pointer items-center'>
             <span></span>
             <span className='ml-1 hover:text-lg'>Home</span>
           </Link>
 
           {userLoggedIn ?
             <>
-            <Link to='/lists' style={{ display: 'flex' }} className='m-2 text-sm cursor-pointer items-center'>
+            <Link to='/lists' style={{ display: 'flex' }} className='m-2 text-md cursor-pointer items-center'>
               <span></span>
               <span className='ml-1 hover:text-lg'>My List</span>
             </Link> 
 
-            <span className='flex ml-1 hover:text-lg m-2 text-sm cursor-pointer items-center' onClick={logoutUser}>Log Out</span>
+            {/* <span className='flex ml-1 hover:text-lg m-2 text-sm cursor-pointer items-center' onClick={logoutUser}>Log Out</span> */}
             </>
           : 
             <>
