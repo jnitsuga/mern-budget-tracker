@@ -3,7 +3,7 @@ import Axios from 'axios'
 import { toast } from 'react-toastify';
 import { FaUser } from 'react-icons/fa'
 import { useUserContext } from '../contexts/ContextProvider'
-import Banner from '../components/Banner';
+import Banner from '../components/Navbar';
 
 const Register = () => {
   const { 

@@ -1,30 +1,52 @@
 import React from 'react'
 import Axios from 'axios'
-import { toast } from 'react-toastify';
+import { toast } from 'react-toastify'
 import { FaSignInAlt } from 'react-icons/fa'
 import { useUserContext } from '../contexts/ContextProvider'
-import Banner from '../components/Banner';
+import Banner from '../components/Navbar';
 
 const Login = () => {
-  const { inputUsername, setInputUsername, inputPassword, setInputPassword, loggedIn, setLoggedIn } = useUserContext();
+  const { inputUsername, setInputUsername, inputPassword, setInputPassword, user, setUser } = useUserContext();
+
+  const retrieveUserDetails = async (accessToken) => {
+    // const options = {
+    //   headers: {Authorization: `Bearer ${accessToken}`}
+    // }
+
+    await Axios.get('http://localhost:4000/api/users/me', {
+      headers: {Authorization: `Bearer ${accessToken}`}
+    }).then(res => {
+      setUser(res.data.firstName)
+      // window.location="/"
+    })
+  }
 
   const login = async (e) => {
     e.preventDefault()
 
-    Axios.post('http://localhost:4000/api/users/login', {
-      username: inputUsername,
-      password: inputPassword
-    }).then(response => {
-      toast(`Welcome, ${response.data.firstName}!`)
-      setLoggedIn(`${response.data.firstName}`)
-    })
+    try {
+      await Axios.post('http://localhost:4000/api/users/login', {
+        username: inputUsername,
+        password: inputPassword
+      }).then(res => {
+        if(typeof res.data !== 'undefined') {
+          localStorage.setItem('token', res.data.accessToken)
+          retrieveUserDetails(res.data.accessToken)
+          toast('Successfully logged in')
+          window.location='/'
+        } 
+      })
+    } catch (error) {
+      toast(error)
+      console.log(error)
+    }
   }
 
   return (
     <>
     <Banner header='/login' subHeader='Log In' />
     <div className='m-4 space-y-1.5'>
-      {loggedIn ? null : 
+      {user ? null : 
       <>
         <p className='flex items-center font-bold'>
           <span><FaSignInAlt /></span>

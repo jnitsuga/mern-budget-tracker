@@ -1,9 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import Axios from 'axios'
+import Banner from '../components/Navbar';
 import { useUserContext } from '../contexts/ContextProvider';
-import Banner from '../components/Banner';
 
 const Admin = () => {
-  const { listOfUsers } = useUserContext();
+  const { listOfUsers, setListOfUsers } = useUserContext();
+
+  useEffect(() => {
+    Axios.get('http://localhost:4000/api/users/getUsers').then((response) => {
+      setListOfUsers(response.data)
+    })
+  }, [setListOfUsers])
 
   return (
     <>

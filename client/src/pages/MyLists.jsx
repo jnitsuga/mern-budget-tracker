@@ -1,12 +1,12 @@
 import React from 'react'
 import Banner from '../components/Navbar'
 
-const Home = () => {
+const MyLists = () => {
   return (
     <>
-      <Banner header='/home' subHeader='Home' />
+    <Banner header='/lists' subHeader='Lists' />
     </>
   )
 }
 
-export default Home
+export default MyLists

@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState, useEffect } from 'react'
-import Axios from 'axios'
+import React, { createContext, useContext, useState} from 'react'
+// import Axios from 'axios'
 
 const UserContext = createContext();
 
@@ -14,13 +14,27 @@ export const ContextProvider = ({children}) => {
   const [inputEmail, setInputEmail] = useState('')
   const [inputMobileNo, setInputMobileNo] = useState('')
 
-  const [loggedIn, setLoggedIn] = useState('')
+  // const [user, setUser] = useState(null)
+  
+  // useEffect(() => {
+  //   const payload = {
+  //     headers: {
+  //       'Authorization': `Bearer ${localStorage.getItem('token')}`
+  //     }
+  //   }
 
-  useEffect(() => {
-    Axios.get('http://localhost:4000/api/users/getUsers').then((response) => {
-      setListOfUsers(response.data)
-    })
-  }, [listOfUsers])
+  //   Axios.get('http://localhost:4000/api/users/me', payload).then((response) => {
+  //     setUser(response.data)
+  //   })
+  // }, [setUser])
+
+  const userLoggedIn = localStorage.getItem('token')
+
+  const logoutUser = () => {
+    localStorage.clear()
+    window.location='/'
+  }
+  
   
   return (
     <UserContext.Provider
@@ -41,8 +55,8 @@ export const ContextProvider = ({children}) => {
         setInputEmail,
         inputMobileNo,
         setInputMobileNo,
-        loggedIn,
-        setLoggedIn,
+        userLoggedIn,
+        logoutUser,
       }}
     >
       {children}

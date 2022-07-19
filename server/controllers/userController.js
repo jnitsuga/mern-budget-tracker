@@ -1,7 +1,8 @@
 const UserModel = require('../models/User')
 const bcrypt = require('bcrypt')
-const auth = require('../auth')
-const User = require('../models/User')
+const jwt = require('jsonwebtoken')
+require('dotenv').config();
+const auth = require('../middleware/authMiddleware')
 
 // @desc    Get users
 // @route   GET /api/users/getUsers
@@ -56,33 +57,37 @@ const usernameExists = async (req, res) => {
 // @route   POST /api/users/login
 // @access  Public
 const loginUser = async (req, res) => {
-  await UserModel.findOne({ username: req.body.username }).then(user => {
-    if(!user) {
-      return (
-          false,
-          res.json(`Error: couldn't find user with username of ${req.body.username}`)
-      )
-    }
+  try {
+    const user = await UserModel.findOne({ username: req.body. username })
+    if(!user)
+      return res.status(401).send({ message: 'Invalid Email/password' })
 
     const isPasswordMatched = bcrypt.compareSync(req.body.password, user.password)
-    if(!isPasswordMatched) {
-      return false,
-      res.json('Invalid username/password')
-    }
+    if(!isPasswordMatched)
+      return res.status(401).send({ message: 'Invalid Email/password' })
 
     const accessToken = auth.createAccessToken(user)
-    return (
-      { accessToken: accessToken }, 
-      res.json(user)
-    )
-  })
-}
+    res.status(200).send({
+      accessToken: accessToken,
+      name: user.name,
+      username: user.username,
+      message: `User ${user.username} logged in successfully`, 
+    })
+
+  } catch (error) {
+    res.status(500).send({ message: 'Internal server error' })
+  }
+} 
 
 // @desc    Get user data
 // @route   POST /api/users/me
 // @access  Public
-const getMe = async (req, res) => {
-  res.status(200).json({message: 'getMe' })
+const getMe = async (params) => {
+  const user = await UserModel.findById(params.userId)
+    return (
+      user.password = undefined,
+      user
+    )  
 }
 
 module.exports = {
