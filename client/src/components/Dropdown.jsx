@@ -1,7 +1,8 @@
-import { Fragment } from 'react'
+import { Fragment, useState, useEffect } from 'react'
+import Axios from 'axios'
+import { Link } from 'react-router-dom'
 import { Menu, Transition } from '@headlessui/react'
 import { MenuIcon } from '@heroicons/react/solid'
-import { Link } from 'react-router-dom'
 import { useUserContext } from '../contexts/ContextProvider'
 
 const classNames = (...classes) => {
@@ -10,6 +11,21 @@ const classNames = (...classes) => {
 
 const Dropdown = () => {
   const { logoutUser } = useUserContext();
+  const [ user, setUser ] = useState({})
+
+  useEffect(() => {
+    const payload = {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    }
+
+    Axios.get('http://localhost:4000/api/users/me', payload).then((response) => {
+      if(response.data.isAdmin === true) {
+        setUser(response.data)
+      }
+    })    
+  }, [setUser])
   
   return (
     <Menu as="div" className="relative inline-block text-left">
@@ -44,20 +60,22 @@ const Dropdown = () => {
                 </Link>
               )}
             </Menu.Item>
-            {/* <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="#"
-                  className={classNames(
-                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm'
-                  )}
-                >
-                  Support
-                </a>
-              )}
-            </Menu.Item>
+            {user.isAdmin === true ?
             <Menu.Item>
+                {({ active }) => (
+                  <Link
+                    to='/admin'
+                    className={classNames(
+                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                      'block px-4 py-2 text-sm'
+                    )}
+                  >
+                    Admin Dashboard
+                  </Link>
+                )}
+            </Menu.Item>
+            : <></>}
+            {/* <Menu.Item>
               {({ active }) => (
                 <a
                   href="#"
