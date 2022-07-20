@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Axios from 'axios'
-import Banner from '../components/Navbar'
+import Navbar from '../components/Navbar'
 
 const Account = () => {
   const [user, setUser] = useState({})
@@ -19,7 +19,7 @@ const Account = () => {
 
   return (
     <>
-    <Banner header='/account' headerTw='text-gray-700' subHeader='Account' subHeaderTw='text-black' bannerTw='h-32 bg-jc-lilypad-02'/>
+    <Navbar header='/account' headerTw='text-gray-700' subHeader='Account' subHeaderTw='text-black' bannerTw='h-32 bg-jc-lilypad-02'/>
     <div>
       <div className='usersDisplay flex flex-wrap justify-center gap-2'>
         <div className='bg-amber-100 text-center m-4 p-4 text-md drop-shadow-md'>

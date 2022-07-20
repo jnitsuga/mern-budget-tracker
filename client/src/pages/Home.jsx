@@ -1,10 +1,10 @@
 import React from 'react'
-import Banner from '../components/Navbar'
+import Navbar from '../components/Navbar'
 
 const Home = () => {
   return (
     <>
-      <Banner header='/home' subHeader='Home' />
+      <Navbar header='/home' subHeader='Home' />
     </>
   )
 }

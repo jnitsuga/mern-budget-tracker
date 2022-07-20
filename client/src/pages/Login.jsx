@@ -3,7 +3,7 @@ import Axios from 'axios'
 import { toast } from 'react-toastify'
 import { FaSignInAlt } from 'react-icons/fa'
 import { useUserContext } from '../contexts/ContextProvider'
-import Banner from '../components/Navbar';
+import Navbar from '../components/Navbar';
 
 const Login = () => {
   const { inputUsername, setInputUsername, inputPassword, setInputPassword, user, setUser } = useUserContext();
@@ -32,8 +32,8 @@ const Login = () => {
         if(typeof res.data !== 'undefined') {
           localStorage.setItem('token', res.data.accessToken)
           retrieveUserDetails(res.data.accessToken)
+          window.location='/'
           toast('Successfully logged in')
-          
         } 
       })
     } catch (error) {
@@ -44,7 +44,7 @@ const Login = () => {
 
   return (
     <>
-    <Banner header='/login' subHeader='Log In' />
+    <Navbar header='/login' subHeader='Log In' />
     <div className='m-4 space-y-1.5'>
       {user ? null : 
       <>

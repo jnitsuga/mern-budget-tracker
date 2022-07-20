@@ -3,7 +3,7 @@ import Axios from 'axios'
 import { toast } from 'react-toastify';
 import { FaUser } from 'react-icons/fa'
 import { useUserContext } from '../contexts/ContextProvider'
-import Banner from '../components/Navbar';
+import Navbar from '../components/Navbar';
 
 const Register = () => {
   const { 
@@ -66,7 +66,7 @@ const Register = () => {
 
   return (
     <>
-    <Banner header='/register' subHeader='Register' />
+    <Navbar header='/register' subHeader='Register' />
     <div className='m-4 space-y-1.5'>
 
       {loggedIn ? null : 

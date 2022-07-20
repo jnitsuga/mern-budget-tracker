@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useUserContext } from '../contexts/ContextProvider'
 
-const Banner = (props) => {
+const Navbar = (props) => {
   const { userLoggedIn } = useUserContext();
 
   return (
@@ -54,4 +54,4 @@ const Banner = (props) => {
   )
 }
 
-export default Banner
+export default Navbar
