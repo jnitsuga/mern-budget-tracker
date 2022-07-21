@@ -54,7 +54,20 @@ const createTransaction = async (req, res) => {
 // @route   PUT /api/vaccines/:id
 // @access  Private
 const updateTransaction = async (req, res) => {
-  res.status(200).json({message: `Update vaccine ${req.params.id}` })
+  const user = auth.decode(req.headers.authorization)
+  UserController.getMe({ userId: user.id })
+
+  const id = req.params.id
+  const transaction = await TransactionModel.findById(id)
+
+  if (transaction.createdBy.valueOf() !== user.id) {
+    res.status(401).json({message: 'Unauthorized'})
+  } else {
+    const updatedTransaction = await TransactionModel.findByIdAndUpdate(id, req.body, {
+      new: true,
+    })
+    res.status(200).json(updatedTransaction)
+  }
 }
 
 // @desc    Delete vaccine entry
