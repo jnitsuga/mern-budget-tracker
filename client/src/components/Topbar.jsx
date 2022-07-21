@@ -5,14 +5,14 @@ import { Link } from 'react-router-dom'
 
 import { useUserContext } from '../contexts/ContextProvider'
 
-const Navbar = () => {
+const Topbar = () => {
   const { userLoggedIn } = useUserContext();
 
   return (
-    <div className='flex w-full items-center justify-between p-4 bg-slate-200 drop-shadow-sm h-12'>
+    <div className='flex w-full items-center justify-between p-4 bg-zinc-900 drop-shadow-sm h-12'>
       <div className='title'>
         <Link to='/'>
-          <span className='m-2 text-xl font-bold'>Fint</span>
+          <span className='m-2 text-xl font-bold text-gray-100'>Fint</span>
         </Link>
       </div>
 
@@ -27,12 +27,12 @@ const Navbar = () => {
           </>
           : 
           <>
-            <Link to='/login' style={{ display: 'flex' }} className='m-2 text-sm cursor-pointer items-center'>
+            <Link to='/login' style={{ display: 'flex' }} className='m-2 text-sm cursor-pointer items-center text-gray-200'>
               <span><FaSignInAlt /></span>
               <span className='ml-1'>Log In</span>
             </Link>
 
-            <Link to='/register' style={{ display: 'flex' }} className='m-2 text-sm cursor-pointer items-center'>
+            <Link to='/register' style={{ display: 'flex' }} className='m-2 text-sm cursor-pointer items-center text-gray-200'>
               <span><FaUser /></span>
               <span className='ml-1'>Register</span>
             </Link> 
@@ -44,4 +44,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default Topbar

@@ -43,6 +43,7 @@ const createTransaction = async (req, res) => {
   const transaction = await TransactionModel.create({
     createdBy: user.id,
     category: req.body.category,
+    currency: req.body.currency,
     amount: req.body.amount,
     description: req.body.description,
   })

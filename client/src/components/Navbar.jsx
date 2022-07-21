@@ -25,7 +25,7 @@ const Navbar = (props) => {
         </div>
       </div>
 
-      <div className='flex w-full items-center p-4 bg-slate-200 drop-shadow-sm rounded-xl mt-3 h-14'>
+      <div className='flex w-full items-center p-4 bg-zinc-900 drop-shadow-sm rounded-xl mt-3 h-14 text-gray-200'>
         <div className='nav-links flex'>
           <Link to='/' style={{ display: 'flex' }} className='m-2 text-md cursor-pointer items-center'>
             <span></span>
@@ -34,9 +34,9 @@ const Navbar = (props) => {
 
           {userLoggedIn ?
             <>
-            <Link to='/lists' style={{ display: 'flex' }} className='m-2 text-md cursor-pointer items-center'>
+            <Link to='/transactions' style={{ display: 'flex' }} className='m-2 text-md cursor-pointer items-center'>
               <span></span>
-              <span className='ml-1 hover:text-lg'>My List</span>
+              <span className='ml-1 hover:text-lg'>Transactions</span>
             </Link> 
 
             {/* <span className='flex ml-1 hover:text-lg m-2 text-sm cursor-pointer items-center' onClick={logoutUser}>Log Out</span> */}

@@ -71,7 +71,7 @@ const Register = () => {
 
       {loggedIn ? null : 
         <>
-        <p className='flex items-center font-bold'>
+        <p className='flex items-center font-bold text-gray-200'>
           <span><FaUser /></span>
           <span className='ml-1'>Register</span>
         </p>

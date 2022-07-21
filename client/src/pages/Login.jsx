@@ -48,7 +48,7 @@ const Login = () => {
     <div className='m-4 space-y-1.5'>
       {user ? null : 
       <>
-        <p className='flex items-center font-bold'>
+        <p className='flex items-center font-bold text-gray-200'>
           <span><FaSignInAlt /></span>
           <span className='ml-1'>Log In</span>
         </p>

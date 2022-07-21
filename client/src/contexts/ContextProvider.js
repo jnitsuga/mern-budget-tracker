@@ -1,10 +1,12 @@
 import React, { createContext, useContext, useState} from 'react'
-// import Axios from 'axios'
 
 const UserContext = createContext();
 
 export const ContextProvider = ({children}) => {
   const [listOfUsers, setListOfUsers] = useState([]);
+  const [transactionsList, setTransactionsList] = useState([]);
+
+  const [ showAddTransactionForm, setShowAddTransactionForm ] = useState(false)
 
   const [inputFirstName, setInputFirstName] = useState('')
   const [inputLastName, setInputLastName] = useState('')
@@ -14,19 +16,10 @@ export const ContextProvider = ({children}) => {
   const [inputEmail, setInputEmail] = useState('')
   const [inputMobileNo, setInputMobileNo] = useState('')
 
-  // const [user, setUser] = useState(null)
-  
-  // useEffect(() => {
-  //   const payload = {
-  //     headers: {
-  //       'Authorization': `Bearer ${localStorage.getItem('token')}`
-  //     }
-  //   }
-
-  //   Axios.get('http://localhost:4000/api/users/me', payload).then((response) => {
-  //     setUser(response.data)
-  //   })
-  // }, [setUser])
+  const [inputCategory, setInputCategory] = useState('')
+  const [inputCurrency, setInputCurrency] = useState('')
+  const [inputAmount, setInputAmount] = useState('')
+  const [inputDescription, setInputDescription] = useState('')
 
   const userLoggedIn = localStorage.getItem('token')
 
@@ -34,7 +27,6 @@ export const ContextProvider = ({children}) => {
     localStorage.clear()
     window.location='/'
   }
-  
   
   return (
     <UserContext.Provider
@@ -57,6 +49,18 @@ export const ContextProvider = ({children}) => {
         setInputMobileNo,
         userLoggedIn,
         logoutUser,
+        transactionsList,
+        setTransactionsList,
+        showAddTransactionForm,
+        setShowAddTransactionForm,
+        inputCategory,
+        setInputCategory,
+        inputCurrency,
+        setInputCurrency,
+        inputAmount,
+        setInputAmount,
+        inputDescription,
+        setInputDescription,
       }}
     >
       {children}

@@ -10,7 +10,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Account from './pages/Account';
-import MyLists from './pages/MyLists';
+import Transactions from './pages/Transactions';
 import Admin from './pages/Admin';
 import Logout from './pages/Logout';
 
@@ -30,7 +30,7 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='/me' element={<Account />} />
-            <Route path='/lists' element={<MyLists />} />
+            <Route path='/transactions' element={<Transactions />} />
             <Route path='/admin' element={<Admin />} />
             <Route path='/logout' element={<Logout />} />
           </Routes>

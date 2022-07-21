@@ -30,9 +30,9 @@ const Dropdown = () => {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
+        <Menu.Button className="inline-flex justify-center w-full rounded-md border border-slate-900 shadow-sm px-4 py-2 bg-slate-800 text-sm font-medium text-gray-700 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-800 focus:ring-zinc-900">
           
-          <MenuIcon className="h-5 w-5" aria-hidden="true" />
+          <MenuIcon className="h-5 w-5" aria-hidden="true" color='#F3F4F6' />
         </Menu.Button>
       </div>
 

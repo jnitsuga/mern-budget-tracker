@@ -3,7 +3,6 @@ const router = express.Router();
 const auth = require('../middleware/authMiddleware')
 
 //Controllers
-const TransactionController = require('../controllers/transactionController');
 const { 
   getAllTransactions,
   getMyTransactions,
