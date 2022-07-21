@@ -14,7 +14,7 @@ const {
 
 router.post('/createTransaction', auth.verify, createTransaction)
 
-router.route('/:id').put(updateTransaction).delete(deleteTransaction);
+router.route('/:id').put(updateTransaction).delete(auth.verify, deleteTransaction);
 // #note    shortened version since both of them use the same route '/:id'
 // router.put('/:id', updateVaccineEntry)
 // router.delete('/:id', deleteVaccineEntry)

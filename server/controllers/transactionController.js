@@ -47,7 +47,7 @@ const createTransaction = async (req, res) => {
     description: req.body.description,
   })
 
-  res.status(200).send(transaction)
+  res.status(201).send(transaction)
 }
 
 // @desc    Update vaccine entry
@@ -61,10 +61,18 @@ const updateTransaction = async (req, res) => {
 // @route   DELETE /api/vaccines/:id
 // @access  Private
 const deleteTransaction = async (req, res) => {
-  const id = req.params.id
-  await TransactionModel.findByIdAndRemove(id).exec()
+  const user = auth.decode(req.headers.authorization)
+  UserController.getMe({ userId: user.id })
 
-  res.status(200).json({message: `Deleted transaction ${id}` })
+  const id = req.params.id
+  const transaction = await TransactionModel.findById(id)
+
+  if (transaction.createdBy.valueOf() !== user.id) {
+    res.status(401).json({message: 'Unauthorized'})
+  } else {
+    await TransactionModel.findByIdAndRemove(id).exec()
+    res.status(200).json({message: `Deleted transaction ${id}` })
+  }
 }
 
 module.exports = {
