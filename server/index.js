@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cors())
 app.use(cookieParser())
 
-app.use('/api/vaccines', require('./routes/vaccineRoutes'))
+app.use('/api/transactions', require('./routes/transactionRoutes'))
 app.use('/api/users', require('./routes/userRoutes'))
 
 mongoose.connect(process.env.MONGODB_URI, {

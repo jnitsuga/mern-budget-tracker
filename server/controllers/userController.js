@@ -1,6 +1,5 @@
 const UserModel = require('../models/User')
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
 require('dotenv').config();
 const auth = require('../middleware/authMiddleware')
 
@@ -82,8 +81,8 @@ const loginUser = async (req, res) => {
 // @desc    Get user data
 // @route   POST /api/users/me
 // @access  Public
-const getMe = async (params) => {
-  const user = await UserModel.findById(params.userId)
+const getMe = async (param) => {
+  const user = await UserModel.findById(param.userId)
     return (
       user.password = undefined,
       user

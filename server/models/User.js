@@ -28,21 +28,12 @@ const userSchema = new mongoose.Schema({
 		type: Boolean,
 		default: false 
 	},
-	vaccines: [
-    {
-      vaccineName: {
-        type: String
-      },
-      dateReceived: {
-        type: Date,
-        default: new Date()
-      },
-      dateNextDue: {
-        type: Date,
-        default: new Date()
-      }  
-    }
-	],
+	// transactions: [
+  //   {
+	// 		type: mongoose.Schema.Types.ObjectId,
+	// 		ref: 'Transaction'
+	// 	}
+	// ],
 },
 {
 	timestamps: true

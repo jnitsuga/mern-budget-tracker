@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const UserController = require('../controllers/userController');
 const auth = require('../middleware/authMiddleware')
 
+//Controllers
+const UserController = require('../controllers/userController');
 const { 
   getUsers, 
   registerUser,
   usernameExists,
   loginUser,
-  getMe,
 } = require('../controllers/userController');
 
 router.get('/getUsers', getUsers);
