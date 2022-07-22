@@ -20,10 +20,10 @@ const AddTransactionForm = () => {
     }
   }
 
-  const createTransaction = (e) => {
+  const createTransaction = async (e) => {
     e.preventDefault()
 
-    Axios.post('http://localhost:4000/api/transactions/createTransaction', {
+    await Axios.post('http://localhost:4000/api/transactions/createTransaction', {
       category: inputCategory,
       currency: inputCurrency,
       amount: inputAmount,
@@ -32,10 +32,10 @@ const AddTransactionForm = () => {
     .then((res) => {
       if(res) {
         setTransactionsList([...transactionsList, {
-          category: inputCategory,
-          currency: inputCurrency,
-          amount: inputAmount,
-          description: inputDescription,
+          category: res.data.category,
+          currency: res.data.currency,
+          amount: res.data.amount,
+          description: res.data.description,
         }])
         toast('New transaction successfully added')
       }
@@ -56,9 +56,24 @@ const AddTransactionForm = () => {
             Category
           </label>
           <div className="relative">
-            <select className="block appearance-none w-full border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" onChange={(e) => {setInputCategory(e.target.value)}}>
-              <option>Expense</option>
-              <option>Income</option>
+            <select className="block appearance-none w-full border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" value={inputCategory} onChange={(e) => {setInputCategory(e.target.value)}}>
+              <option value='Expense'>Expense</option>
+              <option value='Income'>Income</option>
+            </select>
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+              <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+            Currency
+          </label>
+          <div className="relative">
+            <select className="block appearance-none w-full border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" value={inputCurrency} onChange={(e) => {setInputCurrency(e.target.value)}}>
+              <option value={'PHP'}>PHP</option>
+              <option value={'USD'}>USD</option>
             </select>
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
               <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -71,23 +86,7 @@ const AddTransactionForm = () => {
             Amount
           </label>
           <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="number" placeholder="0.00" onChange={(e) => {setInputAmount(e.target.value)}} />
-        </div>
-
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
-            Currency
-          </label>
-          <div className="relative">
-            <select className="block appearance-none w-full border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" onChange={(e) => {setInputCurrency(e.target.value)}}>
-              <option>PHP</option>
-              <option>USD</option>
-            </select>
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-              <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-            </div>
-          </div>
-        </div>
-        
+        </div>   
       
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">

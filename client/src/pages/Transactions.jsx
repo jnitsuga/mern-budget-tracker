@@ -2,11 +2,20 @@ import React, { useEffect } from 'react'
 import Axios from 'axios'
 import { AiOutlinePlus } from 'react-icons/ai'
 import Navbar from '../components/Navbar'
+import SummaryBoard from '../components/SummaryBoard'
 import { useUserContext } from '../contexts/ContextProvider'
 import AddTransactionForm from '../components/AddTransactionForm'
 
 const Transactions = () => {
   const { transactionsList, setTransactionsList, showAddTransactionForm, setShowAddTransactionForm } = useUserContext();
+
+  useEffect(() => {
+    Axios.get('http://localhost:4000/api/transactions/getMyTransactions', {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}})
+    .then((response) => {
+      console.log(response.data)
+      setTransactionsList(response.data)
+    })
+  }, [setTransactionsList])
 
   const payload = {
     headers: {
@@ -14,28 +23,22 @@ const Transactions = () => {
     }
   }
 
-  useEffect(() => {
-    const payload = {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
-    }
-    
+  const getMyTransactions = () => {
     Axios.get('http://localhost:4000/api/transactions/getMyTransactions', payload).then((response) => {
-      console.log(response.data)
       setTransactionsList(response.data)
     })
-  }, [setTransactionsList])
+  }
 
   const deleteTransaction = (id) => {
-    console.log(id)
-    Axios.delete(`http://localhost:4000/api/transactions/${id}`, payload)
+    Axios.delete(`http://localhost:4000/api/transactions/${id}`, payload).then(() => {
+      getMyTransactions()
+    })
   }
 
   return (
     <>
     <Navbar header='/transactions' headerTw='text-gray-700' subHeader='Transactions' subHeaderTw='text-black' bannerTw='bg-jc-lilypad-02'/>
-
+    <SummaryBoard />
     <div className='m-4'>
       <table className='table-fixed w-full bg-slate-800 drop-shadow-xl'>
         <thead className='bg-slate-600 text-gray-100'>

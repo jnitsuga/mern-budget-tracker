@@ -16,8 +16,8 @@ export const ContextProvider = ({children}) => {
   const [inputEmail, setInputEmail] = useState('')
   const [inputMobileNo, setInputMobileNo] = useState('')
 
-  const [inputCategory, setInputCategory] = useState('')
-  const [inputCurrency, setInputCurrency] = useState('')
+  const [inputCategory, setInputCategory] = useState('Expense')
+  const [inputCurrency, setInputCurrency] = useState('PHP')
   const [inputAmount, setInputAmount] = useState('')
   const [inputDescription, setInputDescription] = useState('')
 
