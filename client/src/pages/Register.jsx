@@ -1,5 +1,6 @@
 import React from 'react'
 import Axios from 'axios'
+import { useNavigate } from 'react-router-dom'; 
 import { toast } from 'react-toastify';
 import { FaUser } from 'react-icons/fa'
 import { useUserContext } from '../contexts/ContextProvider'
@@ -25,11 +26,13 @@ const Register = () => {
     setInputMobileNo,
     loggedIn, 
   } = useUserContext();
+
+  const navigate = useNavigate();
   
-  const registerUser = (e) => {
+  const registerUser = async (e) => {
     e.preventDefault()
 
-    Axios.post('http://localhost:4000/api/users/username-exists', {
+    await Axios.post('http://localhost:4000/api/users/username-exists', {
       username: inputUsername
     }).then((res) => {
       if(res.data === false) {
@@ -54,6 +57,7 @@ const Register = () => {
                 email: inputEmail,
                 mobileNo: inputMobileNo,
               }])
+              navigate('/login')
               toast(`User ${inputFirstName} successfully registered!`)
             }
           })

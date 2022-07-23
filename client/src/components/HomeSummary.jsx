@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Axios from 'axios'
 
-const SummaryBoard = (props) => {
+const HomeSummary = (props) => {
   const [ totalExpenses, setTotalExpenses ] = useState('');
   const [ totalIncome, setTotalIncome ] = useState('');
   const [ balance, setBalance ] = useState('');
@@ -39,29 +39,31 @@ const SummaryBoard = (props) => {
   }, [props])
 
   return (
+    <>
     <div className='m-4 shadow-inner'>
-      <div className={`summary-board-bg bg-gray rounded-xl w-full px-6 py-4 bg-slate-900 `}>
+      <div className={`bg-gray rounded-xl w-full px-6 py-6 bg-slate-900 bg-opacity-20`}>
         <div className='flex items-center space-x-6'>
-          <div className='block bg-gray-700 bg-opacity-70 px-6 py-2 rounded-xl drop-shadow'>
+          <div className='block bg-gray-700 bg-opacity-70 px-6 py-6 rounded-xl drop-shadow'>
             <span className={`flex font-bold text-xl text-gray-300`}>Total Income</span>
-            <span className={`flex text-3xl text-white`}>{totalIncome.toLocaleString("en-US")}</span>
+            <span className={`flex text-4xl text-white`}>{totalIncome.toLocaleString("en-US")}</span>
           </div>
 
-          <div className='block bg-gray-700 bg-opacity-70 px-6 py-2 rounded-xl drop-shadow'>
+          <div className='block bg-gray-700 bg-opacity-70 px-6 py-6 rounded-xl drop-shadow'>
             <span className={`flex font-bold text-xl text-gray-300`}>Total Expenses</span>
-            <span className={`flex text-3xl text-white`}>{totalExpenses.toLocaleString("en-US")}</span>
+            <span className={`flex text-4xl text-white`}>{totalExpenses.toLocaleString("en-US")}</span>
           </div>
 
-          <div className='block bg-gray-700 bg-opacity-70 px-6 py-2 rounded-xl drop-shadow'>
+          <div className='block bg-gray-700 bg-opacity-70 px-6 py-6 rounded-xl drop-shadow'>
             <span className={`flex font-bold text-xl text-gray-300`}>Balance</span>
-            <span className={`flex text-3xl ${balance > 0 ? 'text-green-500' : 'text-red-600'}`}>{balance.toLocaleString("en-US")}</span>
+            <span className={`flex text-4xl ${balance > 0 ? 'text-green-500' : 'text-red-600'}`}>{balance.toLocaleString("en-US")}</span>
           </div>
         </div>
 
       </div>
     </div>
+    </>
   )
 }
 
 
-export default SummaryBoard
+export default HomeSummary

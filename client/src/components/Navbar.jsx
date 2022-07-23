@@ -25,7 +25,7 @@ const Navbar = (props) => {
         </div>
       </div>
 
-      <div className='flex w-full items-center p-4 bg-zinc-900 drop-shadow-sm rounded-xl mt-3 h-14 text-gray-200'>
+      <div className='flex w-full items-center p-4 bg-zinc-900 drop-shadow-sm rounded-xl mt-4 h-14 text-gray-200'>
         <div className='nav-links flex'>
           <Link to='/' style={{ display: 'flex' }} className='m-2 text-md cursor-pointer items-center'>
             <span></span>

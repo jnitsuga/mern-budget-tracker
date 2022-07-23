@@ -1,4 +1,3 @@
-const UserModel = require('../models/User')
 const auth = require('../middleware/authMiddleware')
 const TransactionModel = require('../models/Transaction')
 const UserController = require('../controllers/userController')
@@ -17,10 +16,8 @@ const getAllTransactions = async (req, res) => {
 }
 
 const getMyTransactions = async (req, res) => {
-  console.log('Verifying user...')
   const user = auth.decode(req.headers.authorization)
   UserController.getMe({ userId: user.id })
-  console.log(user.id)
 
   const transaction = await TransactionModel.find({ createdBy: user.id })
 
@@ -31,43 +28,49 @@ const getMyTransactions = async (req, res) => {
 // @route   POST /api/transactions/createTransaction
 // @access  Private
 const createTransaction = async (req, res) => {
-  if (!req.res.body) {
+  try {
+    const user = auth.decode(req.headers.authorization)
+    UserController.getMe({ userId: user.id })
+
+    const transaction = await TransactionModel.create({
+      createdBy: user.id,
+      category: req.body.category,
+      currency: req.body.currency,
+      amount: req.body.amount,
+      description: req.body.description,
+    })
+    
+    const transactions = await TransactionModel.find({ createdBy: user.id })
+    res.status(201).send(transactions)
+  }
+  catch {
     res.status(400)
   }
-
-  console.log('Verifying user...')
-  const user = auth.decode(req.headers.authorization)
-  UserController.getMe({ userId: user.id })
-
-  console.log('Creating transaction...')
-  const transaction = await TransactionModel.create({
-    createdBy: user.id,
-    category: req.body.category,
-    currency: req.body.currency,
-    amount: req.body.amount,
-    description: req.body.description,
-  })
-
-  res.status(201).send(transaction)
 }
 
 // @desc    Update vaccine entry
 // @route   PUT /api/vaccines/:id
 // @access  Private
 const updateTransaction = async (req, res) => {
-  const user = auth.decode(req.headers.authorization)
+  try {
+    const user = auth.decode(req.headers.authorization)
   UserController.getMe({ userId: user.id })
 
   const id = req.params.id
   const transaction = await TransactionModel.findById(id)
 
-  if (transaction.createdBy.valueOf() !== user.id) {
-    res.status(401).json({message: 'Unauthorized'})
-  } else {
-    const updatedTransaction = await TransactionModel.findByIdAndUpdate(id, req.body, {
+  if (transaction.createdBy.valueOf() === user.id) {
+    await TransactionModel.findByIdAndUpdate(id, req.body, {
       new: true,
     })
-    res.status(200).json(updatedTransaction)
+    const transactions = await TransactionModel.find({ createdBy: user.id })
+    res.status(200).send(transactions)
+  } else {
+    res.status(401).json({message: 'Unauthorized'})
+  }
+  }
+  catch {
+    res.status(500).send({ message: 'Internal server error' })
   }
 }
 
@@ -75,18 +78,25 @@ const updateTransaction = async (req, res) => {
 // @route   DELETE /api/vaccines/:id
 // @access  Private
 const deleteTransaction = async (req, res) => {
-  const user = auth.decode(req.headers.authorization)
-  UserController.getMe({ userId: user.id })
+  try {
+    const user = auth.decode(req.headers.authorization)
+    UserController.getMe({ userId: user.id })
 
-  const id = req.params.id
-  const transaction = await TransactionModel.findById(id)
+    const id = req.params.id
+    const transaction = await TransactionModel.findById(id)
 
-  if (transaction.createdBy.valueOf() !== user.id) {
-    res.status(401).json({message: 'Unauthorized'})
-  } else {
-    await TransactionModel.findByIdAndRemove(id).exec()
-    res.status(200).json({message: `Deleted transaction ${id}` })
+    if (transaction.createdBy.valueOf() == user.id) {
+      await TransactionModel.findByIdAndRemove(id).exec()
+      const transactions = await TransactionModel.find({ createdBy: user.id })
+      res.status(200).send(transactions)
+    } else {
+      res.status(401).json({message: 'Unauthorized'})
+    }
   }
+  catch {
+    res.status(500).send({ message: 'Internal server error' })
+  }
+
 }
 
 module.exports = {

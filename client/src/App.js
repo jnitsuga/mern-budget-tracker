@@ -5,7 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
 
-import Navbar from './components/Topbar';
+import Topbar from './components/Topbar';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -22,7 +22,7 @@ function App() {
         <div className='main header'>
 
           <ToastContainer />
-          <Navbar />
+          <Topbar />
 
           <Routes>
             <Route path='/' element={<Home />} />

@@ -3,14 +3,12 @@ import Axios from 'axios'
 import { Link } from 'react-router-dom'
 import { Menu, Transition } from '@headlessui/react'
 import { MenuIcon } from '@heroicons/react/solid'
-import { useUserContext } from '../contexts/ContextProvider'
 
 const classNames = (...classes) => {
   return classes.filter(Boolean).join(' ')
 }
 
 const Dropdown = () => {
-  const { logoutUser } = useUserContext();
   const [ user, setUser ] = useState({})
 
   useEffect(() => {
@@ -26,6 +24,11 @@ const Dropdown = () => {
       }
     })    
   }, [setUser])
+
+  const logoutUser = () => {
+    localStorage.clear()
+    window.location='/'
+  }
   
   return (
     <Menu as="div" className="relative inline-block text-left">

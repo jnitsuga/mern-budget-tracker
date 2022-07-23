@@ -5,7 +5,12 @@ import { GrClose } from 'react-icons/gr'
 import { useUserContext } from '../contexts/ContextProvider';
 
 const AddTransactionForm = () => {
-  const { transactionsList, setTransactionsList, showAddTransactionForm, setShowAddTransactionForm, inputCategory,
+  const { 
+    transactionsList, 
+    setTransactionsList, 
+    showAddTransactionForm, 
+    setShowAddTransactionForm, 
+    inputCategory,
     setInputCategory,
     inputCurrency,
     setInputCurrency,
@@ -40,7 +45,9 @@ const AddTransactionForm = () => {
         toast('New transaction successfully added')
       }
     })
-     
+    .catch((error) => {
+      console.error(`ERROR! ${error}`)
+    })
   }
 
   return (

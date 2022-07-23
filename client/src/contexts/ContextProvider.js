@@ -22,11 +22,6 @@ export const ContextProvider = ({children}) => {
   const [inputDescription, setInputDescription] = useState('')
 
   const userLoggedIn = localStorage.getItem('token')
-
-  const logoutUser = () => {
-    localStorage.clear()
-    window.location='/'
-  }
   
   return (
     <UserContext.Provider
@@ -48,7 +43,6 @@ export const ContextProvider = ({children}) => {
         inputMobileNo,
         setInputMobileNo,
         userLoggedIn,
-        logoutUser,
         transactionsList,
         setTransactionsList,
         showAddTransactionForm,
