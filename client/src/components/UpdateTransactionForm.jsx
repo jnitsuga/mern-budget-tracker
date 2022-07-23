@@ -3,11 +3,11 @@ import Axios from 'axios'
 import { GrClose } from 'react-icons/gr'
 import { useUserContext } from '../contexts/ContextProvider';
 
-const AddTransactionForm = () => {
+const UpdateTransactionForm = () => {
   const { 
     setTransactionsList, 
-    showAddTransactionForm, 
-    setShowAddTransactionForm, 
+    showUpdateTransactionForm,
+    setShowUpdateTransactionForm,
     inputCategory,
     setInputCategory,
     inputCurrency,
@@ -15,8 +15,7 @@ const AddTransactionForm = () => {
     inputAmount,
     setInputAmount,
     inputDescription,
-    setInputDescription, 
-  } = useUserContext();
+    setInputDescription, } = useUserContext();
 
   const payload = {
     headers: {
@@ -24,10 +23,13 @@ const AddTransactionForm = () => {
     }
   }
 
-  const createTransaction = (e) => {
+  //TODO: FIX UPDATE
+  const updateTransaction = (e) => {
     e.preventDefault()
 
-    Axios.post('http://localhost:4000/api/transactions/createTransaction', {
+    let id=null
+
+    Axios.put(`http://localhost:4000/api/transactions/${id}`, {
       category: inputCategory,
       currency: inputCurrency,
       amount: inputAmount,
@@ -43,12 +45,12 @@ const AddTransactionForm = () => {
 
   return (
     <>
-    {/* Add Transaction Form */}
+    {/* Update Transaction Form */}
     <div className="w-full max-w-xs m-4">
       <form className="bg-gray-50 shadow-md rounded px-8 pt-6 pb-8 mb-4 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-        <p className='my-4 text-xl'>Create New Transaction</p>
+        <p className='my-4 text-xl'>Edit Transaction</p>
         <div className='absolute right-3 top-3'>
-          <button onClick={() => setShowAddTransactionForm(!showAddTransactionForm)}><GrClose /></button>
+          <button onClick={() => setShowUpdateTransactionForm(!showUpdateTransactionForm)}><GrClose /></button>
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
@@ -98,16 +100,17 @@ const AddTransactionForm = () => {
           <button 
             className="bg-green-200 hover:bg-green-400 py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
             type="button"
-            onClick={createTransaction}
+            onClick={updateTransaction}
           >
-            Add Transaction
+            Save
           </button>
         </div>
+
       </form>
     </div>
-    {/* End of Add Transaction Form */}
+    {/* End of Update Transaction Form */}
     </>
   )
 }
 
-export default AddTransactionForm
+export default UpdateTransactionForm

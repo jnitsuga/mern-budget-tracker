@@ -7,6 +7,7 @@ export const ContextProvider = ({children}) => {
   const [transactionsList, setTransactionsList] = useState([]);
 
   const [ showAddTransactionForm, setShowAddTransactionForm ] = useState(false)
+  const [ showUpdateTransactionForm, setShowUpdateTransactionForm ] = useState(false)
 
   const [inputFirstName, setInputFirstName] = useState('')
   const [inputLastName, setInputLastName] = useState('')
@@ -55,6 +56,8 @@ export const ContextProvider = ({children}) => {
         setInputAmount,
         inputDescription,
         setInputDescription,
+        showUpdateTransactionForm,
+        setShowUpdateTransactionForm,
       }}
     >
       {children}
