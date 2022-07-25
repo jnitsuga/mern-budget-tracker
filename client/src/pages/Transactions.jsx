@@ -8,7 +8,15 @@ import AddTransactionForm from '../components/AddTransactionForm'
 import UpdateTransactionForm from '../components/UpdateTransactionForm'
 
 const Transactions = () => {
-  const { transactionsList, setTransactionsList, showAddTransactionForm, setShowAddTransactionForm, showUpdateTransactionForm, setShowUpdateTransactionForm, } = useUserContext();
+  const { 
+    transactionsList, 
+    setTransactionsList, 
+    showAddTransactionForm, 
+    setShowAddTransactionForm, 
+    showUpdateTransactionForm, 
+    setShowUpdateTransactionForm, 
+    setTransactionId,
+  } = useUserContext();
 
   useEffect(() => {
     Axios.get('http://localhost:4000/api/transactions/getMyTransactions', 
@@ -59,6 +67,9 @@ const Transactions = () => {
     .then((response) => {
       setTransactionsList(response.data)
     })
+    .catch((error) => {
+      console.error(`ERROR! ${error}`)
+    })
   }
 
   return (
@@ -85,7 +96,7 @@ const Transactions = () => {
               <td className='px-4 py-2'>{transaction.amount.toLocaleString("en-US")}</td>
               <td className='px-4 py-2'>{transaction.description}</td>
               <td className='px-4 py-2 space-x-6'>
-                <span className='text-xs'><button onClick={() => setShowUpdateTransactionForm(!showUpdateTransactionForm)}>Edit</button></span>
+                <span className='text-xs'><button onClick={() => {setShowUpdateTransactionForm(!showUpdateTransactionForm); setTransactionId(transaction._id);}}>Edit</button></span>
                 <span className='text-xs'><button onClick={() => deleteTransaction(transaction._id)}>Delete</button></span>
               </td>
             </tr>
@@ -94,10 +105,10 @@ const Transactions = () => {
         </tbody>
       </table>
     </div>
+
+    {!showAddTransactionForm ? <button className='text-white bg-slate-600 text-4xl rounded-full hover:bg-green-400 absolute bottom-5 left-5 drop-shadow-xl' onClick={() => setShowAddTransactionForm(!showAddTransactionForm)}><AiOutlinePlus /></button> : null}
     
     {showAddTransactionForm ? <AddTransactionForm /> : null}
-    
-    {!showAddTransactionForm ? <button className='text-white bg-slate-600 text-4xl rounded-full hover:bg-green-400 absolute bottom-5 left-5 drop-shadow-xl' onClick={() => setShowAddTransactionForm(!showAddTransactionForm)}><AiOutlinePlus /></button> : null}
 
     {showUpdateTransactionForm ? <UpdateTransactionForm /> : null}
     

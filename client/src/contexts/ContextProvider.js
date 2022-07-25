@@ -22,6 +22,8 @@ export const ContextProvider = ({children}) => {
   const [inputAmount, setInputAmount] = useState('')
   const [inputDescription, setInputDescription] = useState('')
 
+  const [transactionId, setTransactionId] = useState('')
+
   const userLoggedIn = localStorage.getItem('token')
   
   return (
@@ -58,6 +60,8 @@ export const ContextProvider = ({children}) => {
         setInputDescription,
         showUpdateTransactionForm,
         setShowUpdateTransactionForm,
+        transactionId,
+        setTransactionId,
       }}
     >
       {children}

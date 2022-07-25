@@ -1,9 +1,10 @@
 import React from 'react'
 import Axios from 'axios'
+import { toast } from 'react-toastify'
 import { GrClose } from 'react-icons/gr'
 import { useUserContext } from '../contexts/ContextProvider';
 
-const UpdateTransactionForm = () => {
+const UpdateTransactionForm = (props) => {
   const { 
     setTransactionsList, 
     showUpdateTransactionForm,
@@ -15,7 +16,9 @@ const UpdateTransactionForm = () => {
     inputAmount,
     setInputAmount,
     inputDescription,
-    setInputDescription, } = useUserContext();
+    setInputDescription,
+    transactionId,
+  } = useUserContext();
 
   const payload = {
     headers: {
@@ -23,12 +26,7 @@ const UpdateTransactionForm = () => {
     }
   }
 
-  //TODO: FIX UPDATE
-  const updateTransaction = (e) => {
-    e.preventDefault()
-
-    let id=null
-
+  const updateTransaction = (id) => {
     Axios.put(`http://localhost:4000/api/transactions/${id}`, {
       category: inputCategory,
       currency: inputCurrency,
@@ -37,6 +35,8 @@ const UpdateTransactionForm = () => {
     }, payload)
     .then((res) => {
       setTransactionsList(res.data)
+      setShowUpdateTransactionForm(!showUpdateTransactionForm)
+      toast('Transaction updated')
     })
     .catch((error) => {
       console.error(`ERROR! ${error}`)
@@ -98,9 +98,9 @@ const UpdateTransactionForm = () => {
 
         <div className="flex items-center justify-between">
           <button 
-            className="bg-green-200 hover:bg-green-400 py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
+            className="bg-green-200 hover:bg-green-400 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="button"
-            onClick={updateTransaction}
+            onClick={() => updateTransaction(transactionId)}
           >
             Save
           </button>

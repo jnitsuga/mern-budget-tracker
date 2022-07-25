@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Axios from 'axios'
 
-const HomeSummary = (props) => {
+const HomeSummary = () => {
   const [ totalExpenses, setTotalExpenses ] = useState('');
   const [ totalIncome, setTotalIncome ] = useState('');
   const [ balance, setBalance ] = useState('');
@@ -36,7 +36,7 @@ const HomeSummary = (props) => {
       })
     }
     getMyTransactions() 
-  }, [props])
+  }, [])
 
   return (
     <>

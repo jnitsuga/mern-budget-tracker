@@ -1,5 +1,6 @@
 import React from 'react'
 import Axios from 'axios'
+import { toast } from 'react-toastify'
 import { GrClose } from 'react-icons/gr'
 import { useUserContext } from '../contexts/ContextProvider';
 
@@ -35,6 +36,8 @@ const AddTransactionForm = () => {
     }, payload)
     .then((res) => {
       setTransactionsList(res.data)
+      setShowAddTransactionForm(!showAddTransactionForm)
+      toast(`New ${inputCategory.toLowerCase()} transaction created`)
     })
     .catch((error) => {
       console.error(`ERROR! ${error}`)

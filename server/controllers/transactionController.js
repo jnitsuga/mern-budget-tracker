@@ -32,7 +32,7 @@ const createTransaction = async (req, res) => {
     const user = auth.decode(req.headers.authorization)
     UserController.getMe({ userId: user.id })
 
-    const transaction = await TransactionModel.create({
+    await TransactionModel.create({
       createdBy: user.id,
       category: req.body.category,
       currency: req.body.currency,
@@ -54,20 +54,20 @@ const createTransaction = async (req, res) => {
 const updateTransaction = async (req, res) => {
   try {
     const user = auth.decode(req.headers.authorization)
-  UserController.getMe({ userId: user.id })
+    UserController.getMe({ userId: user.id })
 
-  const id = req.params.id
-  const transaction = await TransactionModel.findById(id)
+    const id = req.params.id
+    const transaction = await TransactionModel.findById(id)
 
-  if (transaction.createdBy.valueOf() === user.id) {
-    await TransactionModel.findByIdAndUpdate(id, req.body, {
-      new: true,
-    })
-    const transactions = await TransactionModel.find({ createdBy: user.id })
-    res.status(200).send(transactions)
-  } else {
-    res.status(401).json({message: 'Unauthorized'})
-  }
+    if (transaction.createdBy.valueOf() === user.id) {
+      await TransactionModel.findByIdAndUpdate(id, req.body, {
+        new: true,
+      })
+      const transactions = await TransactionModel.find({ createdBy: user.id })
+      res.status(200).send(transactions)
+    } else {
+      res.status(401).json({message: 'Unauthorized'})
+    }
   }
   catch {
     res.status(500).send({ message: 'Internal server error' })
@@ -96,7 +96,6 @@ const deleteTransaction = async (req, res) => {
   catch {
     res.status(500).send({ message: 'Internal server error' })
   }
-
 }
 
 module.exports = {

@@ -8,7 +8,9 @@ module.exports.createAccessToken = (user) => {
     id: user._id,
     username: user.username
   }
-  return jwt.sign(data, secret, {})
+  return jwt.sign(data, secret, {
+    expiresIn: '30d',
+  })
 }
 
 //lets us replicate the verify method to validate if the access token generated has been sent and received from the correct client
